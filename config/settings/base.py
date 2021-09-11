@@ -14,8 +14,7 @@ import os
 
 import environ
 
-env = environ.Env()
-
+from decouple import config
 
 ROOT_DIR = environ.Path(__file__) - 3
 APPS_DIR = ROOT_DIR.path('helptutor')
@@ -24,7 +23,7 @@ APPS_DIR = ROOT_DIR.path('helptutor')
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
