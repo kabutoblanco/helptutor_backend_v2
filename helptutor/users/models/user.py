@@ -1,7 +1,11 @@
 # Django
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
+
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 # Utilities
 from utils.models import BaseModel
@@ -32,6 +36,18 @@ class User(BaseModel, AbstractUser):
             'Unselect this instead of deleting accounts.'
         ),
     )
+
+    def send_registration_email(self, rol):
+        body = render_to_string('new-user.html',
+            {'first_name': self.first_name, 'last_name': self.last_name, 'rol': rol},)
+        email_message = EmailMessage(
+            subject='Registro Helptutor',
+            body=body,
+            from_email=settings.EMAIL_HOST_USER,
+            to=[self.email],
+        )
+        email_message.content_subtype = 'html'
+        email_message.send() 
 
     def __str__(self):
         return "[{}] {}".format(self.id, self.email)

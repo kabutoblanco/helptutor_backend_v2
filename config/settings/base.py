@@ -163,9 +163,9 @@ STATIC_ROOT = os.path.join(ROOT_DIR, "static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(APPS_DIR, "media")
 
-# EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
-# EMAIL_HOST="smtp.gmail.com"
-# EMAIL_USE_TLS=True
-# EMAIL_PORT=587
-# EMAIL_HOST_USER=env('SALCHICHON_DE_VACA')
-# EMAIL_HOST_PASSWORD=env('SALCHICHON_DE_POLLO')
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_USE_TLS=True
+EMAIL_PORT=587
+EMAIL_HOST_USER=config('SALCHICHON_DE_VACA')
+EMAIL_HOST_PASSWORD=config('SALCHICHON_DE_POLLO')

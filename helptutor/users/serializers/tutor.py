@@ -45,6 +45,7 @@ class TutorCreateSerializer(serializers.ModelSerializer):
         user = validated_data.pop('user')
         user = self.context['user']
         tutor = Tutor.objects.create(**validated_data, user=user)
+        user.send_registration_email('tutor')
 
         user = tutor.user
         instance = dict()
@@ -95,11 +96,11 @@ class TutorGoogleCreateSerializer(serializers.Serializer):
             # Crea un nuevo usuario o lo recupera si ya existe
             user, created = User.objects.get_or_create(
                 email=user['username'], defaults={**user}
-            )
+            )        
             if created:
                 user.set_password(user.password)
                 user.save()
-            self.context['user'] = user
+            self.context['user'] = user            
             verify_tutor_exist(user.email)
             return data
         except ValueError:
@@ -115,6 +116,7 @@ class TutorGoogleCreateSerializer(serializers.Serializer):
         tutor.save()
 
         user = self.context['user']
+        user.send_registration_email('tutor')
         instance = dict()
         instance['user'] = user
         instance['token'] = AuthToken.objects.create(user)[1]

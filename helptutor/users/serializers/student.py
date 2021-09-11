@@ -45,6 +45,7 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         user = validated_data.pop('user')
         user = self.context['user']
         student = Student.objects.create(**validated_data, user=user)
+        user.send_registration_email('tutor')
 
         user = student.user
         instance = dict()
@@ -108,6 +109,7 @@ class StudentGoogleCreateSerializer(serializers.Serializer):
         tutor.save()
 
         user = self.context['user']
+        user.send_registration_email('tutor')
         instance = dict()
         instance['user'] = user
         instance['token'] = AuthToken.objects.create(user)[1]
