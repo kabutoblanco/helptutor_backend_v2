@@ -1,0 +1,7 @@
+# PRECAUTION: avoid production dependencies that aren't in development
+
+-r ./base.txt
+
+# Google
+google-auth==1.27.1
+google-oauth==1.0.1
