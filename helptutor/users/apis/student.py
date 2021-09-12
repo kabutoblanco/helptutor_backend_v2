@@ -56,8 +56,8 @@ class StudentViewSet(viewsets.ModelViewSet):
         return Student.objects.get(user=self.kwargs['pk'])
 
 
-class StudentGoogleAPI(generic.CreateView):
-    """TutorGoogle view set."""
+class StudentGoogleAPI(generics.CreateAPIView):
+    """StudentGoogle view set."""
 
     serializer_class = StudentGoogleCreateSerializer
     permission_classes = [AllowAny]

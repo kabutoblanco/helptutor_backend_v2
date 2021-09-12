@@ -3,7 +3,7 @@ from django.db import transaction
 from django.views import generic
 
 # rest_framework
-from rest_framework import viewsets, mixins
+from rest_framework import (generics, viewsets)
 from rest_framework.permissions import (
     AllowAny,
     IsAuthenticated
@@ -57,7 +57,7 @@ class TutorViewSet(viewsets.ModelViewSet):
         return Tutor.objects.get(user=self.kwargs['pk'])
 
 
-class TutorGoogleAPI(generic.CreateView):
+class TutorGoogleAPI(generics.CreateAPIView):
     """TutorGoogle view set."""
 
     serializer_class = TutorGoogleCreateSerializer

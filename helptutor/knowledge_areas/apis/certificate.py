@@ -1,4 +1,5 @@
 # rest_framework
+from helptutor.knowledge_areas.models.knowledge_area_tutor import KnowledgeArea_Tutor
 from rest_framework import (status, viewsets)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -23,6 +24,7 @@ class CertificateViewSet(viewsets.ModelViewSet):
         self.perform_update(instance)
         id_speciality = instance.knowledge_area_tutor.id
         Certificate.objects.filter(knowledge_area_tutor=id_speciality, is_active=True).update(is_active=False)
+        KnowledgeArea_Tutor.objects.filter(pk=id_speciality).update(is_active=False)
         Service.objects.filter(knowledge_area_tutor=id_speciality).update(is_active=False)
         Aggrement.objects.filter(service__knowledge_area_tutor=id_speciality).update(is_active=False)        
         return Response(status=status.HTTP_204_NO_CONTENT)
