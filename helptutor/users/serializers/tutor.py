@@ -86,7 +86,6 @@ class TutorGoogleCreateSerializer(serializers.Serializer):
     token = serializers.CharField()
 
     def validate_token(self, data):
-        print(data)
         """Validate token Google"""
         token = data
         CLIENT_ID = "581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"

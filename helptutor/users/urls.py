@@ -18,7 +18,7 @@ router.register('review', ReviewViewSet, basename='review-base')
 
 urlpatterns = [
     # path('api/auth', include('knox.urls')),
-    # path('api/auth/user', UserAPI.as_view()),
+    path('api/auth/user', UserAPI.as_view()),
     path('api/tutor/google', TutorGoogleAPI.as_view()),
     path('api/student/google', StudentGoogleAPI.as_view()),
     path('api/tutor/review', TutorReviewAPI.as_view()),

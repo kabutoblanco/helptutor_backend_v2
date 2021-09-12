@@ -61,3 +61,8 @@ class StudentGoogleAPI(generics.CreateAPIView):
 
     serializer_class = StudentGoogleCreateSerializer
     permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        print(request.data)
+        print(self.get_permissions())
+        return super().create(request, *args, **kwargs)
