@@ -14,6 +14,7 @@ urlpatterns = [
     path('', include('helptutor.services.urls')),
     # path('', include('helptutor.sesions.urls')),
     path('', include('helptutor.users.urls')),
+    path('', include('helptutor.frontend.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

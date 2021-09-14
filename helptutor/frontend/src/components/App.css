@@ -1,0 +1,44 @@
+:root {
+  --neutro: white;
+  --color-gray: #e1e1e1;
+  --color-primary: #1190cb;
+}
+
+#app {
+  background: var(--color-gray);
+}
+
+.main-layout > div {
+  margin: 1rem;
+  padding: 1rem;
+  background: var(--neutro);
+  border-radius: 10px;
+}
+
+.title-component {
+  color: var(--color-primary);
+  text-transform: uppercase;
+  font-weight: bolder;
+  display: flex;
+  justify-content: center;
+}
+
+.progress {
+  width: 100%;
+  position: fixed;
+  z-index: 1051;
+}
+
+/* Autocomplete */
+.MuiAutocomplete-root {
+  width: inherit !important;
+  padding: 0;
+}
+
+.MuiInputBase-input {
+  padding: 0 !important;
+}
+
+.MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'] {
+  padding: 6px !important;
+}
