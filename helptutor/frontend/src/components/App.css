@@ -15,6 +15,14 @@
   border-radius: 10px;
 }
 
+.nav-lateral{
+  width: 20%;
+}
+
+.body{
+  width: 100%;
+}
+
 .title-component {
   color: var(--color-primary);
   text-transform: uppercase;
@@ -28,6 +36,27 @@
   position: fixed;
   z-index: 1051;
 }
+
+.item-list{
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-list{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
 
 /* Autocomplete */
 .MuiAutocomplete-root {
