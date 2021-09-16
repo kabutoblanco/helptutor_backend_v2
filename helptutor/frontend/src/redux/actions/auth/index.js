@@ -13,6 +13,7 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
+  SET_ROLE,
 } from './types';
 
 export const loadUser = () => (dispatch, getState) => {
@@ -37,7 +38,7 @@ export const login = (data) => (dispatch) => {
   axios
     .post('api/auth/login', data)
     .then((res) => {
-      console.log(res)
+      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -60,4 +61,8 @@ export const logout = () => (dispatch, getState) => {
     .catch((err) => {
       dispatch(returnErrors(err.response.data, err.response.status));
     });
+};
+
+export const setRole = (role) => (dispatch) => {
+  dispatch({ type: SET_ROLE, payload: role });
 };

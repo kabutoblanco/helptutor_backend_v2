@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function profile() {
+export default function ItemList() {
     return (
         <div>
-            Mi perfil
+            
         </div>
     )
 }

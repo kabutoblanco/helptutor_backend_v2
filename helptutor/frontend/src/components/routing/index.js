@@ -27,6 +27,9 @@ export default function Routing() {
         <PrivateRoute path={'/rol'} component={SetRole} />
         <Route exact path={['/', '/inicio']} component={Home} />
         <Route exact path='/login' component={Login} />
+        <Route>
+          <div className=''>Página no existe</div>
+        </Route>
       </Switch>
     </Router>
   );

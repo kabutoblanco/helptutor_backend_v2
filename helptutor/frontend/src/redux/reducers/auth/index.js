@@ -5,6 +5,7 @@ import {
   AUTH_ERROR,
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
+  SET_ROLE,
 } from '../../actions/auth/types';
 
 const initialState = {
@@ -13,6 +14,7 @@ const initialState = {
   isLoading: false,
   user: null,
   roles: [],
+  roleCurrent: null,
 };
 
 export default function (state = initialState, action) {
@@ -47,6 +49,12 @@ export default function (state = initialState, action) {
         user: null,
         isAuthenticated: false,
         isLoading: false,
+        roleCurrent: null,
+      };
+    case SET_ROLE:
+      return {
+        ...state,
+        roleCurrent: action.payload,
       };
     default:
       return state;

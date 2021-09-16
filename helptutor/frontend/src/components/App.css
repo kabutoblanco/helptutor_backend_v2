@@ -2,12 +2,18 @@
   --neutro: white;
   --color-gray: #e1e1e1;
   --color-primary: #1190cb;
+  --color-subprimary: rgba(17, 144, 203, 0.75);
 }
 
 #app {
   background: var(--color-gray);
 }
 
+.hidden {
+  display: none;
+}
+
+/* main-layout */
 .main-layout > div {
   margin: 1rem;
   padding: 1rem;
@@ -15,13 +21,14 @@
   border-radius: 10px;
 }
 
-.nav-lateral{
-  width: 20%;
+.nav-lateral {
+  width: 30%;
 }
 
-.body{
+.body {
   width: 100%;
 }
+/* main-layout */
 
 .title-component {
   color: var(--color-primary);
@@ -29,6 +36,7 @@
   font-weight: bolder;
   display: flex;
   justify-content: center;
+  margin-bottom: 0.5rem;
 }
 
 .progress {
@@ -37,13 +45,15 @@
   z-index: 1051;
 }
 
-.item-list{
+/* list */
+.item-list {
   display: flex;
   justify-content: space-between;
   padding: 0.5rem;
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
 }
+/* list */
 
 .text-truncate {
   overflow: hidden;
@@ -51,12 +61,16 @@
   white-space: nowrap;
 }
 
-.header-list{
+.header-list {
   display: flex;
   flex-direction: column;
   align-content: center;
 }
 
+.btn-primary {
+  background: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
 
 /* Autocomplete */
 .MuiAutocomplete-root {
@@ -66,8 +80,30 @@
 
 .MuiInputBase-input {
   padding: 0 !important;
+  padding-right: 60px !important;
 }
 
 .MuiAutocomplete-inputRoot[class*='MuiOutlinedInput-root'] {
   padding: 6px !important;
+}
+/* Autocomplete */
+
+.navbar-menu {
+  flex-direction: row;
+}
+
+.navbar-main {
+  background: var(--neutro);
+}
+
+.navbar-submain {
+  background: var(--color-subprimary);
+}
+
+.navbar-submain a {
+  color: var(--neutro);
+}
+
+.navbar-submain a:hover {
+  font-weight: bolder;
 }

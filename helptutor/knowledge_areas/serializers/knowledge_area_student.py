@@ -6,7 +6,14 @@ from helptutor.knowledge_areas.serializers.knowledge_area import KnowledgeAreaSe
 
 
 class KnowledgeArea_StudentSerializer(serializers.ModelSerializer):
-    knowledge_area = KnowledgeAreaSerializer()
+
+    class Meta:
+        model = KnowledgeArea_Student
+        fields = '__all__'
+
+        
+class KnowledgeArea_StudentViewSerializer(serializers.ModelSerializer):
+    knowledge_area = KnowledgeAreaSerializer(read_only=True)
 
     class Meta:
         model = KnowledgeArea_Student

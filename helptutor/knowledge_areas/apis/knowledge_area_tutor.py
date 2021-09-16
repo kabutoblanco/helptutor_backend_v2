@@ -19,16 +19,25 @@ class KnowledgeArea_TutorViewSet(viewsets.ModelViewSet):
     """KnowledgeArea_Tutor view set."""
 
     queryset = KnowledgeArea_Tutor.objects.filter(is_active=True)
-    serializer_class = KnowledgeArea_TutorSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):  
+        """Return serializer based on action."""
+        if self.action in ['create', 'partial_update']:
+            return KnowledgeArea_TutorSerializer
+        return KnowledgeArea_TutorViewSerializer
 
     def create(self, request, *args, **kwargs):
         request.data['tutor'] = Tutor.objects.get(user=request.user.id).pk
-        return super().create(request, *args, **kwargs)
+        response = super().create(request, *args, **kwargs)
+        response.data = KnowledgeArea_TutorViewSerializer(KnowledgeArea_Tutor.objects.get(pk=response.data['id'])).data
+        return response
 
     def partial_update(self, request, *args, **kwargs):
         request.data['tutor'] = Tutor.objects.get(user=request.user.id).pk
-        return super().partial_update(request, *args, **kwargs)
+        response = super().partial_update(request, *args, **kwargs)
+        response.data = KnowledgeArea_TutorViewSerializer(KnowledgeArea_Tutor.objects.get(pk=response.data['id'])).data
+        return response
 
     def destroy(self, request, pk=None):
         instance = self.get_object()
@@ -42,7 +51,7 @@ class KnowledgeArea_TutorViewSet(viewsets.ModelViewSet):
 class TutorSpecialityAPIList(generics.ListAPIView):
     """Returns the specialities of a tutor."""
 
-    serializer_class = KnowledgeArea_TutorSerializer    
+    serializer_class = KnowledgeArea_TutorViewSerializer    
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):

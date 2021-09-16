@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-export default function index() {
-    return (
-        <div>
-            Informacion
-        </div>
-    )
+import MainLayout from '../../layout/MainLayout';
+import List from '../profile/List';
+import Form from './Form';
+
+export default function Profile() {
+  return <MainLayout navLateral={<List />} body={<Form />} />;
 }
