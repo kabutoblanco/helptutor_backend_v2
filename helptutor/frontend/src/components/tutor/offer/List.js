@@ -6,7 +6,7 @@ import { ACTION_END, ACTION_RUNNING } from '../../../redux/actions/types';
 
 import { deleteTutorKnowledgeArea } from '../../../services/Tutor';
 
-// import ItemList from './ItemList';
+import ItemList from './ItemList';
 
 export default function List(props) {
   const { setData, list, setList } = props;
@@ -25,25 +25,27 @@ export default function List(props) {
   //   };
 
   return (
-    <div className=''>
-      <div className='header-list'>
-        <span className='title-component'>Ofertas disponibles</span>
+    <div className="">
+      <div className="header-list">
+        <span className="title-component">Ofertas disponibles</span>
       </div>
-      <ul className='list-group mt-1'>
+      <ul className="list-group mt-1">
         {list.map(
-          (item) =>
-            item.title + ' ' + item.student.user.first_name
-            // <ItemList
-            //   key={item.id}
-            //   data={item}
-            //   onDelete={() => {
-            //     onDelete(item.id);
-            //     setData(null);
-            //   }}
-            //   onSelect={() => {
-            //     setData({ ...item });
-            //   }}
-            // />
+          (item) => (
+            //item.title + ' ' + item.student.user.first_name
+            <ItemList key={item.id} data={item} />
+          )
+          // <ItemList
+          //   key={item.id}
+          //   data={item}
+          //   onDelete={() => {
+          //     onDelete(item.id);
+          //     setData(null);
+          //   }}
+          //   onSelect={() => {
+          //     setData({ ...item });
+          //   }}
+          // />
         )}
       </ul>
     </div>

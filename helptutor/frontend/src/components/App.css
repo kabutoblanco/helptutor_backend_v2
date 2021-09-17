@@ -107,3 +107,33 @@
 .navbar-submain a:hover {
   font-weight: bolder;
 }
+
+/*Juan David*/
+
+.item-offer{
+    justify-content: space-between;
+    background: var(--color-gray);
+    align-items: center;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    padding: 1.5rem 0.8rem 1.5rem 1.5rem;
+
+}
+
+.offer-information{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.offer-title{
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+
+.offer-view{
+  display: flex;
+  align-items: center;
+}
+
+
