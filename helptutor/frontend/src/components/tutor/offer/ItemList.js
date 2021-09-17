@@ -1,30 +1,29 @@
-import React from 'react'
+import React from 'react';
+
+import { Avatar } from '@material-ui/core';
 
 export default function ItemList(props) {
-    const{data}=props
+  const { data } = props;
 
-    return (
-        <div className="item-offer d-flex">
-            <div className="offer-view">
-                <div className="avatar">
-                    <img src={data.student.user.photo} alt="" />
-                </div>
-                <div className="offer-information">
-                    <span className="offer-title">
-                        {data.title}
-                    </span>
-                    <span className="offer-autor">
-                        {data.student.user.first_name}
-                    </span>
-                    <span className="offer-description">
-
-                    </span>
-                </div>
-            </div>
-            <div className="offer-options">
-                <button className="btn btn-primary">POSTULAR</button>
-                <button className="btn btn-secundary">x</button>
-            </div>
+  return (
+    <div className='item-offer d-flex'>
+      <div className='offer-view'>
+        <Avatar
+          alt='user photo'
+          className='mr-3'
+          src={data.student.user.photo}
+          sx={{ width: 65, height: 65 }}>
+          <b>{data.student.user.first_name[0]}</b>
+        </Avatar>
+        <div className='offer-information'>
+          <span className='offer-title'>{data.title}</span>
+          <span className='offer-autor'>{data.student.user.first_name}</span>
+          <span className='offer-description'></span>
         </div>
-    )
+      </div>
+      <div className='offer-options'>
+        <button className='btn btn-primary'>POSTULAR</button>
+      </div>
+    </div>
+  );
 }

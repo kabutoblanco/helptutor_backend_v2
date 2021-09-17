@@ -27,11 +27,12 @@ export default function NavBar() {
     setAnchorEl(null);
   };
 
+  console.log(auth.user)
+
   const authLinks =
     auth.roleCurrent != null ? (
       <>
         <Avatar
-          className='avatar'
           aria-controls='menu'
           onClick={handleOpen}
           alt='user photo'

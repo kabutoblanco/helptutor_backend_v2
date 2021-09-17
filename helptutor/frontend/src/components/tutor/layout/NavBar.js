@@ -10,7 +10,7 @@ export default function NavBar() {
           <li className='nav-item mr-4'>
             <Link className='nav-link' to='/tutor/oferta'>Ofertas</Link>
           </li>
-          <li class='nav-item'>
+          <li className='nav-item'>
             <Link className='nav-link' to='/tutor/anuncio'>Anuncios</Link>
           </li>
         </ul>

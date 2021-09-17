@@ -11,8 +11,6 @@ import ItemList from './ItemList';
 export default function List(props) {
   const { setData, list, setList } = props;
 
-  console.log(list);
-
   //   const dispatch = useDispatch();
 
   //   const onDelete = (id) => {
@@ -32,7 +30,6 @@ export default function List(props) {
       <ul className="list-group mt-1">
         {list.map(
           (item) => (
-            //item.title + ' ' + item.student.user.first_name
             <ItemList key={item.id} data={item} />
           )
           // <ItemList

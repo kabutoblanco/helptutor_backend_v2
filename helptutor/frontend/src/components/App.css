@@ -110,30 +110,56 @@
 
 /*Juan David*/
 
-.item-offer{
-    justify-content: space-between;
-    background: var(--color-gray);
-    align-items: center;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    padding: 1.5rem 0.8rem 1.5rem 1.5rem;
-
+.item-offer {
+  justify-content: space-between;
+  background: var(--color-gray);
+  align-items: center;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  padding: 1.5rem 0.8rem 1.5rem 1.5rem;
 }
 
-.offer-information{
+.offer-information {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.offer-title{
+.offer-title {
   font-weight: bolder;
   text-transform: capitalize;
 }
 
-.offer-view{
+.offer-autor {
+  font-style: oblique;
+  font-size: 0.7rem;
+  text-transform: capitalize;
+}
+
+.offer-view {
   display: flex;
   align-items: center;
 }
 
+.box-form {
+  padding: 3rem 5rem;
+  margin: 3rem;
+  background: white;
+  border-radius: 5px;
+}
 
+.input-form {
+  display: grid;
+}
+
+.span-description {
+  font-size: 12px;
+}
+
+.btn-google {
+  border: 1px solid var(--color-gray);
+}
+
+.form-label {
+  margin-bottom: 5px;
+}

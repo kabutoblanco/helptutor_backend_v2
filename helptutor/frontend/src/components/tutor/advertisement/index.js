@@ -18,6 +18,8 @@ export default function index() {
     });
   }, []);
 
+  console.log(advertisements)
+
   return (
     <div>
       <MainLayout body={<List list={advertisements} />} />

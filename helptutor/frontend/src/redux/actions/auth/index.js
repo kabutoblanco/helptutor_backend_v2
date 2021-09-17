@@ -52,6 +52,24 @@ export const login = (data) => (dispatch) => {
     });
 };
 
+export const loginGoogle = (data) => (dispatch) => {
+  axios
+    .post('api/auth/login/google', data)
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+
 export const logout = () => (dispatch, getState) => {
   axios
     .post('api/auth/logout', null, tokenConfig(getState))
