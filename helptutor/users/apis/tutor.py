@@ -42,15 +42,15 @@ class TutorViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         request.data['user']['username'] = request.data['user']['email']
         return super().create(request, *args, **kwargs)
-
+    
     def partial_update(self, request, *args, **kwargs):
-        user = self.get_object()
+        user = self.get_object().user
         serializer = UserUpdateSerializer(user, 
                                           data=request.data.pop('user'),
                                           partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return super().update(request, *args, **kwargs)
+        return super().partial_update(request, *args, **kwargs)
         
     def get_object(self):
         """Returns a tutor based on the user's id"""

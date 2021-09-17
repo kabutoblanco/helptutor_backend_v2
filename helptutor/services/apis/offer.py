@@ -40,3 +40,13 @@ class StudentOfferAPI(generics.ListAPIView):
 
     def get_queryset(self):
         return Offer.objects.filter(student__user=self.kwargs['pk_user'], is_active=True)
+
+
+class TutorOfferAPI(generics.ListAPIView):
+    """View ListAPIView with serializer include student"""
+
+    serializer_class = OfferViewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Offer.objects.filter(is_active=True)

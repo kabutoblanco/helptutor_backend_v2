@@ -28,7 +28,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'mdquilindo.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '192.168.20.27', '192.168.0.15', 'localhost', 'mdquilindo.pythonanywhere.com']
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
@@ -63,6 +63,7 @@ LOCAL_APPS = [
     'helptutor.services',
     # 'helptutor.sesions',
     'helptutor.users',
+    'helptutor.frontend'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

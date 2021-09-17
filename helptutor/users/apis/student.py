@@ -43,13 +43,13 @@ class StudentViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
-        user = self.get_object()
+        user = self.get_object().user
         serializer = UserUpdateSerializer(user, 
                                           data=request.data.pop('user'),
                                           partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return super().update(request, *args, **kwargs)
+        return super().partial_update(request, *args, **kwargs)
 
     def get_object(self):
         """Returns a student based on the user's id"""
