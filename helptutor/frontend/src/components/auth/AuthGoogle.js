@@ -28,6 +28,7 @@ export default function AuthGoogle(props) {
         buttonText={isLogin ? 'Google' : 'Google'}
         onSuccess={(res) => responseGoogle(res)}
         onFailure={(res) => responseGoogle(res)}
+        accessType={false}
         cookiePolicy={'single_host_origin'}
       />
     </>
