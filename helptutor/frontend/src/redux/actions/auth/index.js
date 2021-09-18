@@ -27,7 +27,7 @@ export const loadUser = () => (dispatch, getState) => {
       });
     })
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+      // dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: AUTH_ERROR,
       });
@@ -55,6 +55,78 @@ export const login = (data) => (dispatch) => {
 export const loginGoogle = (data) => (dispatch) => {
   axios
     .post('api/auth/login/google', data)
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+
+export const addTutor = (data) => (dispatch) => {
+  axios
+    .post('api/tutor/', data)
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+
+export const addStudent = (data) => (dispatch) => {
+  axios
+    .post('api/student/', data)
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+
+export const addTutorGoogle = (data) => (dispatch) => {
+  axios
+    .post('api/tutor/google', data)
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      dispatch(returnErrors(err.response.data, err.response.status));
+      dispatch({
+        type: LOGIN_FAIL,
+      });
+    });
+};
+
+export const addStudentGoogle = (data) => (dispatch) => {
+  axios
+    .post('api/student/google', data)
     .then((res) => {
       console.log(res);
       dispatch({

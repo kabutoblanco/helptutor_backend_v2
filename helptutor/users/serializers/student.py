@@ -7,13 +7,14 @@ from google.auth.transport import requests
 
 # models
 from knox.models import AuthToken
-from helptutor.users.models import User, Student
+from helptutor.users.models import User, Student, Tutor, Moderator
 
 # serializers
 from .user import (UserViewSerializer, UserCreateSerializer)
 
 # utilities
-from utils.string import get_information_google
+from utils.auth import get_response_user
+from utils.google import get_information_google
 
 
 class StudentViewSerializer(serializers.ModelSerializer):
@@ -48,11 +49,8 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         user.send_registration_email('tutor')
 
         user = student.user
-        instance = dict()
-        instance['user'] = user
-        instance['token'] = AuthToken.objects.create(user)[1]
-
-        return instance
+        
+        return get_response_user(user)
 
     def to_representation(self, instance):
         instance['user'] = UserViewSerializer(instance['user']).data
@@ -109,12 +107,9 @@ class StudentGoogleCreateSerializer(serializers.Serializer):
         tutor.save()
 
         user = self.context['user']
-        user.send_registration_email('tutor')
-        instance = dict()
-        instance['user'] = user
-        instance['token'] = AuthToken.objects.create(user)[1]
-
-        return instance
+        user.send_registration_email('student')
+        
+        return get_response_user(user)
 
     def to_representation(self, value):
         value['user'] = UserViewSerializer(value['user']).data

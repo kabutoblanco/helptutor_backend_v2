@@ -27,8 +27,6 @@ export default function NavBar() {
     setAnchorEl(null);
   };
 
-  console.log(auth.user)
-
   const authLinks =
     auth.roleCurrent != null ? (
       <>
@@ -66,7 +64,7 @@ export default function NavBar() {
     );
   const guestLinks = (
     <>
-      <button className='btn btn-outline-primary mr-2' onClick={() => history.push('login')}>
+      <button className='btn btn-outline-primary mr-2' onClick={() => history.push('registro')}>
         REGISTRARME
       </button>
       <button className='btn btn-outline-primary' onClick={() => history.push('login')}>

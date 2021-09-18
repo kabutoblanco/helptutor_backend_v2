@@ -16,7 +16,7 @@ class Alert extends Component {
   componentDidUpdate(prevProps) {
     const { error, alert, message } = this.props;
     if (error !== prevProps.error) {
-      if (error.msg.message) alert.error(`Message: ${error.msg.message.join()}`);
+      if (error.msg.detail) alert.error(`${error.msg.detail}`);
       if (error.msg.non_field_errors) alert.error(error.msg.non_field_errors.join());
     }
 

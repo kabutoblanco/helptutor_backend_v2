@@ -13,6 +13,9 @@ from google.auth.transport import requests
 from knox.models import AuthToken
 from helptutor.users.models import (User, Tutor, Student, Moderator)
 
+# utilities
+from utils.auth import get_response_user
+
 
 class UserViewSerializer(serializers.ModelSerializer):
 
@@ -50,15 +53,9 @@ class LoginSerializer(serializers.Serializer):
         raise serializers.ValidationError("Credenciales incorrectas")
 
     def create(self, validated_data):
-        instance = dict()
         user = self.context['user']
-        is_tutor = Tutor.objects.filter(user=user).exists()
-        is_moderator = Moderator.objects.filter(user=user).exists()
-        is_student = Student.objects.filter(user=user).exists()
-        instance['roles'] = [is_tutor, is_student, is_moderator] 
-        instance['user'] = user
-        instance['token'] = AuthToken.objects.create(user)[1]
-        return instance
+
+        return get_response_user(user)
     
     def to_representation(self, value):
         value['user'] = UserViewSerializer(value['user']).data
@@ -77,15 +74,9 @@ class LoginSerializer(serializers.Serializer):
         raise serializers.ValidationError("Credenciales incorrectas")
 
     def create(self, validated_data):
-        instance = dict()
         user = self.context['user']
-        is_tutor = Tutor.objects.filter(user=user).exists()
-        is_moderator = Moderator.objects.filter(user=user).exists()
-        is_student = Student.objects.filter(user=user).exists()
-        instance['roles'] = [is_tutor, is_student, is_moderator] 
-        instance['user'] = user
-        instance['token'] = AuthToken.objects.create(user)[1]
-        return instance
+
+        return get_response_user(user)
     
     def to_representation(self, value):
         value['user'] = UserViewSerializer(value['user']).data
@@ -110,15 +101,9 @@ class LoginGoogleSerializer(serializers.Serializer):
         return data
     
     def create(self, validated_data):
-        instance = dict()
         user = self.context['user']
-        is_tutor = Tutor.objects.filter(user=user).exists()
-        is_moderator = Moderator.objects.filter(user=user).exists()
-        is_student = Student.objects.filter(user=user).exists()
-        instance['roles'] = [is_tutor, is_student, is_moderator]
-        instance['user'] = user
-        instance['token'] = AuthToken.objects.create(user)[1]
-        return instance
+
+        return get_response_user(user)
     
     def to_representation(self, value):
         value['user'] = UserViewSerializer(value['user']).data

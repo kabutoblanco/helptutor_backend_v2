@@ -1,36 +1,59 @@
 import React from 'react';
 
+// REDUX
 import { useDispatch } from 'react-redux';
 
-import { loginGoogle } from '../../redux/actions/auth';
+// ACTIONS
+import { returnErrors } from '../../redux/actions/messages';
+import { loginGoogle, addTutorGoogle, addStudentGoogle } from '../../redux/actions/auth';
 
-import GoogleLogin from 'react-google-login';
+import { useGoogleLogin } from 'react-google-login';
 
 export default function AuthGoogle(props) {
-  const { isLogin } = props;
+  const { isLogin, role } = props;
 
   const dispatch = useDispatch();
 
-  const responseGoogle = (response) => {
+  const responseGoogle = (res) => {
     const data = {
-      token: response.tokenId,
+      token: res.tokenId,
     };
     if (isLogin) dispatch(loginGoogle(data));
-    // else {
-    //   props.addUserGoogle(data);
-    // }
+    else {
+      if (role != 'tutor') dispatch(addTutorGoogle(data));
+      else if (role == 'student') dispatch(addStudentGoogle(data));
+    }
   };
 
+  const validate = (e) => {
+    e.preventDefault();
+    if (role == undefined && !isLogin) {
+      dispatch(returnErrors({ detail: 'Seleccione un rol' }, 400));
+    } else {
+      signIn();
+    }
+  };
+
+  const onSuccess = (res) => {
+    responseGoogle(res);
+  };
+
+  const onFailure = (res) => {
+    responseGoogle(res);
+  };
+
+  const { signIn } = useGoogleLogin({
+    clientId: '581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com',
+    onSuccess,
+    onFailure,
+    accessType: false,
+    cookiePolicy: 'single_host_origin',
+  });
+
   return (
-    <>
-      <GoogleLogin
-        clientId='581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com'
-        buttonText={isLogin ? 'Google' : 'Google'}
-        onSuccess={(res) => responseGoogle(res)}
-        onFailure={(res) => responseGoogle(res)}
-        accessType={false}
-        cookiePolicy={'single_host_origin'}
-      />
-    </>
+    <button className='btn btn-secundary btn-google' onClick={validate}>
+      <i className='fab fa-google mr-1'></i>
+      Google
+    </button>
   );
 }

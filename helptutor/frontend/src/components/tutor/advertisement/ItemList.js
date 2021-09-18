@@ -15,10 +15,16 @@ export default function ItemList(props) {
           sx={{ width: 65, height: 65 }}>
           <b>{data.student.user.first_name[0]}</b>
         </Avatar>
-        <div className='offer-information'>
-          <span className='offer-title'>{data.title}</span>
-          <span className='offer-autor'>{data.student.user.first_name}</span>
-          <span className='offer-description'></span>
+        <div className=''>
+          <div className='offer-information'>
+            <span className='offer-title'>{data.title}</span>
+            <span className='offer-autor'>{data.student.user.first_name}</span>
+            <span className='offer-description'></span>
+          </div>
+          <div className='input-adv'>
+            <input type='text' name='' id='' />
+            <button className='btn btn-primary'>></button>
+          </div>
         </div>
       </div>
       <div className='offer-options'>

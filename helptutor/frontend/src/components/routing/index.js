@@ -10,6 +10,7 @@ const Home = lazy(() => import('../home'));
 
 // AUTHENTICATION
 const Login = lazy(() => import('../auth'));
+const Register = lazy(() => import('../auth/Register'));
 const SetRole = lazy(() => import('../auth/SetRole'));
 
 // MODULES
@@ -27,6 +28,7 @@ export default function Routing() {
         <PrivateRoute path={'/rol'} component={SetRole} />
         <Route exact path={['/', '/inicio']} component={Home} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/registro' component={Register} />
         <Route>
           <div className=''>Página no existe</div>
         </Route>
