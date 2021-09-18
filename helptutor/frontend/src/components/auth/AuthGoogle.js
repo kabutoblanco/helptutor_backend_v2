@@ -20,7 +20,7 @@ export default function AuthGoogle(props) {
     };
     if (isLogin) dispatch(loginGoogle(data));
     else {
-      if (role != 'tutor') dispatch(addTutorGoogle(data));
+      if (role == 'tutor') dispatch(addTutorGoogle(data));
       else if (role == 'student') dispatch(addStudentGoogle(data));
     }
   };
