@@ -18,6 +18,7 @@ export default function NavBar() {
         break;
     }
   }, []);
+  
   return (
     <div className='navbar navbar-submain'>
       <div className='container-fluid'>

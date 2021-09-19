@@ -13,8 +13,6 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 export default function index() {
   const { url } = useRouteMatch();
 
-  console.log('dentro de perfil tutor');
-
   return (
     <div className=''>
       <Switch>
