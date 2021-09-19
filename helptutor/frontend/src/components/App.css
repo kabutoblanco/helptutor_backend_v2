@@ -10,7 +10,7 @@
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 /* main-layout */
@@ -210,17 +210,23 @@
   justify-content: space-between;
 }
 
+.input-adv form {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .item-adv .MuiAvatar-root {
   align-self: flex-start;
 }
 
-.input-adv > input {
+.input-adv input {
   border: none;
   width: -webkit-fill-available;
   width: -moz-available;
 }
 
-.input-adv > input:focus {
+.input-adv input:focus {
   border: none;
   outline: none;
 }
@@ -232,4 +238,9 @@
 
 .hover-pointer:hover {
   cursor: pointer;
+}
+
+/* Answer */
+.item-answer {
+  border-top: 1px solid gray;
 }

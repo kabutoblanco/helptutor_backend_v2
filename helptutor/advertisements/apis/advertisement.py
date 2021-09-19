@@ -1,9 +1,11 @@
 # rest_framework
-from rest_framework import viewsets
+from helptutor.advertisements.serializers.answer import AnswerViewSerializer
+from helptutor.advertisements.models.answer import Answer
+from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 
 # models
-from helptutor.advertisements.models import Advertisement
+from helptutor.advertisements.models import Advertisement, advertisement
 from helptutor.users.models import Student
 
 # serializers
@@ -25,3 +27,12 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         request.data['student'] = Student.objects.get(user=request.user.id).pk
         return super().create(request, *args, **kwargs)
+
+
+class AdvertisementAnswerAPI(generics.ListAPIView):
+
+    serializer_class = AnswerViewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Answer.objects.filter(advertisement=self.kwargs['id'])

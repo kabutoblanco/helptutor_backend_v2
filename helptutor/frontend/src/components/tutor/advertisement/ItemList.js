@@ -1,9 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { createMessage } from '../../../redux/actions/messages';
+
+import Answer from '../../answer';
+
+import { postAnswer } from '../../../services/Answer';
 
 import { Avatar } from '@material-ui/core';
 
 export default function ItemList(props) {
   const { data } = props;
+
+  const dispatch = useDispatch();
+
+  const [newAnswer, setNewAnswer] = useState(false);
+  const [showAnswers, setShowAnswers] = useState(false);
+
+  const [answer, setAnswer] = useState({
+    advertisement: data.id,
+    description: '',
+  });
+
+  const createAnswer = (e) => {
+    e.preventDefault();
+    postAnswer(answer).then(() => {
+      setAnswer({ ...answer, description: '' });
+      dispatch(createMessage('Respuesta agregada'));
+      setNewAnswer(true);
+    });
+    setNewAnswer(false);
+  };
 
   return (
     <div className='item-offer item-adv d-flex'>
@@ -22,12 +50,35 @@ export default function ItemList(props) {
             <span className='offer-description'></span>
           </div>
           <div className='input-adv'>
-            <input type='text' name='' id='' />
-            <button className='btn btn-primary'>></button>
+            <form action='' onSubmit={createAnswer}>
+              <input
+                type='text'
+                name='description'
+                value={answer.description}
+                onChange={(e) => {
+                  setAnswer({ ...answer, description: e.target.value });
+                }}
+              />
+              <button type='submit' className='btn btn-primary'>
+                {'>'}
+              </button>
+            </form>
           </div>
-          <span className='d-flex hover-pointer'>
-            <i className='fas fa-sort-down mr-1'></i>Ver respuestas
-          </span>
+          <div className='d-flex'>
+            <span
+              className={'hover-pointer' + (!showAnswers ? '' : ' hidden')}
+              onClick={() => setShowAnswers(!showAnswers)}>
+              <i className='fas fa-sort-down mr-1'></i>Ver respuestas
+            </span>
+          </div>
+          <div className='d-flex'>
+            <span
+              className={'hover-pointer' + (showAnswers ? '' : ' hidden')}
+              onClick={() => setShowAnswers(!showAnswers)}>
+              <i className='fas fa-sort-up mr-1'></i>Ocultar respuestas
+            </span>
+          </div>
+          {showAnswers ? <Answer id={data.id} refresh={newAnswer} /> : <></>}
         </div>
       </div>
     </div>

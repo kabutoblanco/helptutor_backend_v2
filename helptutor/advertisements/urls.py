@@ -12,5 +12,6 @@ router.register('advertisement', AdvertisementViewSet)
 router.register('answer', AnswerViewSet)
 
 urlpatterns = [
+    path('api/advertisement/<int:id>/answer/', AdvertisementAnswerAPI.as_view(), name='adv-answers'),
     path('api/', include(router.urls)),
 ]
