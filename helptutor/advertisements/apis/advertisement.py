@@ -15,7 +15,7 @@ from helptutor.advertisements.serializers import AdvertisementSerializer, Advert
 class AdvertisementViewSet(viewsets.ModelViewSet):
     """Advertisement view set."""
 
-    queryset = Advertisement.objects.filter(is_active=True)
+    queryset = Advertisement.objects.filter(is_active=True).order_by('-date_update')
     permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):  
@@ -35,4 +35,4 @@ class AdvertisementAnswerAPI(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Answer.objects.filter(advertisement=self.kwargs['id'])
+        return Answer.objects.filter(advertisement=self.kwargs['id'], is_active=True).order_by('-date_update')
