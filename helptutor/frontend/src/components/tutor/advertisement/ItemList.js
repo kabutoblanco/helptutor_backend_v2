@@ -28,9 +28,10 @@ export default function ItemList(props) {
     postAnswer(answer).then(() => {
       setAnswer({ ...answer, description: '' });
       dispatch(createMessage('Respuesta agregada'));
+      dispatch(createMessage(''));
       setNewAnswer(true);
+      setNewAnswer(false);
     });
-    setNewAnswer(false);
   };
 
   return (

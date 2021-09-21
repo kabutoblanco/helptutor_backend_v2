@@ -12,8 +12,8 @@ import { createMessage } from '../../../redux/actions/messages';
 import { ACTION_RUNNING, ACTION_END } from '../../../redux/actions/types';
 
 // SERVICES
-import { patchTutor } from '../../../services/Tutor';
-import useTutor from '../../../query/useTutor';
+import { patchStudent } from '../../../services/Student';
+import useStudent from '../../../query/useStudent';
 
 export default function Form() {
   const scheme = yup.object().shape({
@@ -28,17 +28,15 @@ export default function Form() {
   const user = useSelector((state) => state.auth.user);
 
   // QUERY
-  const { data, isLoading } = useTutor(user.id);
+  const { data, isLoading } = useStudent(user.id);
 
   // LOCAL
-  const tutor = data || {
+  const student = data || {
     user: user,
-    methodology: '',
-    trajectory: '',
   };
 
   const formik = useFormik({
-    initialValues: tutor,
+    initialValues: student,
     validationSchema: scheme,
     onSubmit: (values, { setSubmitting }) => {
       update(values);
@@ -51,7 +49,7 @@ export default function Form() {
 
   const update = (values) => {
     dispacth({ type: ACTION_RUNNING });
-    patchTutor(user.id, values).then((res) => {
+    patchStudent(user.id, values).then((res) => {
       formik.setValues(res.data);
       dispacth(loadUser);
       dispacth({ type: ACTION_END });
@@ -137,30 +135,6 @@ export default function Form() {
             cols='30'
             rows='5'
             placeholder='Intereses'></textarea>
-        </div>
-      </div>
-      <div className='row mb-2'>
-        <div className='col-12'>
-          <textarea
-            className='w-100'
-            name='methodology'
-            value={formik.values.methodology}
-            onChange={formik.handleChange}
-            cols='30'
-            rows='5'
-            placeholder='Metodología'></textarea>
-        </div>
-      </div>
-      <div className='row mb-2'>
-        <div className='col-12'>
-          <textarea
-            className='w-100'
-            name='trajectory'
-            value={formik.values.trajectory}
-            onChange={formik.handleChange}
-            cols='30'
-            rows='5'
-            placeholder='Trayectoria'></textarea>
         </div>
       </div>
       <div className='d-flex justify-content-center'>

@@ -48,7 +48,7 @@ class StudentInterestAPIList(generics.ListAPIView):
     """Returns the specialities of a tutor."""
 
     permission_classes = [IsAuthenticated]
-    serializer_class = KnowledgeArea_StudentSerializer    
+    serializer_class = KnowledgeArea_StudentViewSerializer    
 
     def get_queryset(self):
         return KnowledgeArea_Student.objects.filter(student__user=self.kwargs['pk_user'], is_active=True)

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Profile from './profile'
+import Profile from './Profile'
 import Information from '../information';
 import KnowledgeArea from '../knowledge_area';
 import Offer from '../offer';
@@ -10,18 +10,17 @@ import Sesion from '../sesion';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 export default function index() {
-  const { path } = useRouteMatch();
+  const { url } = useRouteMatch();
 
   return (
     <div className=''>
-      <div className='div'>Perfil inicial</div>
       <Switch>
-        <Route exact path={`${path}`} component={Profile} />
-        <Route exact path={`${path}/informacion`} component={Information} />
-        <Route exact path={`${path}/interes`} component={KnowledgeArea} />
-        <Route exact path={`${path}/oferta`} component={Offer} />
-        <Route exact path={`${path}/acuerdo`} component={Aggrement} />
-        <Route exact path={`${path}/sesion`} component={Sesion} />
+        <Route exact path={`${url}`} component={Profile} />
+        <Route exact path={`${url}/informacion`} component={Information} />
+        <Route exact path={`${url}/interes`} component={KnowledgeArea} />
+        <Route exact path={`${url}/oferta`} component={Offer} />
+        <Route exact path={`${url}/acuerdo`} component={Aggrement} />
+        <Route exact path={`${url}/sesion`} component={Sesion} />
       </Switch>
     </div>
   );

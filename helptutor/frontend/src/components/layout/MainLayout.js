@@ -4,7 +4,6 @@ import NavLateral from './NavLateral';
 import Body from './Body';
 
 export default function MainLayout({ navLateral, body }) {
-  console.log(navLateral);
   return (
     <div className='container-fluid d-flex main-layout'>
       {navLateral != undefined ? (

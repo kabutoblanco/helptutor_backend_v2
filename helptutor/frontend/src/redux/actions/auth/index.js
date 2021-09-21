@@ -38,7 +38,6 @@ export const login = (data) => (dispatch) => {
   axios
     .post('api/auth/login', data)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -56,7 +55,6 @@ export const loginGoogle = (data) => (dispatch) => {
   axios
     .post('api/auth/login/google', data)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -74,7 +72,6 @@ export const addTutor = (data) => (dispatch) => {
   axios
     .post('api/tutor/', data)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -92,7 +89,6 @@ export const addStudent = (data) => (dispatch) => {
   axios
     .post('api/student/', data)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -110,7 +106,6 @@ export const addTutorGoogle = (data) => (dispatch) => {
   axios
     .post('api/tutor/google', data)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -128,7 +123,6 @@ export const addStudentGoogle = (data) => (dispatch) => {
   axios
     .post('api/student/google', data)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,

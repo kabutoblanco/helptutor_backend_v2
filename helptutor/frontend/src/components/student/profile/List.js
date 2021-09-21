@@ -9,36 +9,41 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function List() {
   const menu = [
-    { id: 0, icon: 'fas fa-user', path: '/tutor/perfil', label: 'Ver perfil' },
+    { id: 0, icon: 'fas fa-user', path: '/estudiante/perfil', label: 'Ver perfil' },
     {
       id: 1,
       icon: 'fas fa-user-edit',
-      path: '/tutor/perfil/informacion',
+      path: '/estudiante/perfil/informacion',
       label: 'Editar información',
     },
     {
       id: 2,
       icon: 'fas fa-briefcase',
-      path: '/tutor/perfil/especialidad',
-      label: 'Especialidades',
+      path: '/estudiante/perfil/interes',
+      label: 'Intereses',
     },
-    { id: 2, icon: 'fas fa-briefcase', path: '/tutor/perfil/asesoria', label: 'Asesorias' },
-    { id: 2, icon: 'fas fa-briefcase', path: '/tutor/perfil/postulacion', label: 'Postulaciones' },
-    { id: 2, icon: 'fas fa-briefcase', path: '/tutor/perfil/sesion', label: 'Sesiones' },
-    { id: 2, icon: 'fas fa-calendar-alt', path: '/tutor/perfil/horario', label: 'Horario' },
+    { id: 2, icon: 'fas fa-briefcase', path: '/estudiante/perfil/oferta', label: 'Ofertas' },
+    {
+      id: 2,
+      icon: 'fas fa-briefcase',
+      path: '/estudiante/perfil/postulacion',
+      label: 'Postulaciones',
+    },
+    { id: 2, icon: 'fas fa-briefcase', path: '/estudiante/perfil/acuerdo', label: 'Acuerdos' },
+    { id: 2, icon: 'fas fa-calendar-alt', path: '/estudiante/perfil/sesion', label: 'Sesiones' },
   ];
 
   const [id, setId] = useState(0);
 
   const auth = useSelector((state) => state.auth);
-  const pathname =  useLocation().pathname;
+  const pathname = useLocation().pathname;
 
   useEffect(() => {
     switch (pathname) {
-      case '/tutor/perfil':
+      case '/estudiante/perfil':
         setId(0);
         break;
-      case '/tutor/perfil/informacion':
+      case '/estudiante/perfil/informacion':
         setId(1);
         break;
     }

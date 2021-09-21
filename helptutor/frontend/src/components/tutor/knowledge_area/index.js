@@ -8,6 +8,7 @@ import { getTutorKnowledgeAreas } from '../../../services/Tutor';
 
 // COMPONENTS
 import MainLayout from '../../layout/MainLayout';
+import FormLayout from '../../layout/FormLayout';
 import List from './List';
 import Form from './Form';
 
@@ -23,12 +24,21 @@ export default function index() {
     });
   }, []);
 
+  const form = (
+    <>
+      <span className='title-component'>INFORMACIÓN</span>
+      <FormLayout
+        form={<Form list={knowledgeAreas} setList={setKnowledgeAreas} data={knowledgeAreaTutor} />}
+      />
+    </>
+  );
+
   return (
     <MainLayout
       navLateral={
         <List list={knowledgeAreas} setList={setKnowledgeAreas} setData={setKnowledgeAreaTutor} />
       }
-      body={<Form list={knowledgeAreas} setList={setKnowledgeAreas} data={knowledgeAreaTutor} />}
+      body={form}
     />
   );
 }

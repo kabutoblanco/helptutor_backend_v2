@@ -47,6 +47,6 @@ export const getTutorServices = (id) => {
 };
 
 // OFFERS
-export const getTutorOffers = (id) => {
+export const getTutorOffers = () => {
   return axios.get('api/tutor/offer/', tokenConfig(store.getState));
 };

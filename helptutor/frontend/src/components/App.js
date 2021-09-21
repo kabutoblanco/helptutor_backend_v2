@@ -17,6 +17,9 @@ import AlertTemplate from 'react-alert-template-basic';
 // // LOCAL COMPONENTS
 import Routing from './routing';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+
 // CSS
 import './App.css';
 
@@ -25,21 +28,26 @@ const alertOptions = {
   position: 'top center',
 };
 
+const queryClient = new QueryClient();
+
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
 
   return (
-    <Provider store={store}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <ProgressAction />
-          <Alert />
-          <Routing />
-        </AlertProvider>
-      </Suspense>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Suspense fallback={<div>Loading...</div>}>
+          <AlertProvider template={AlertTemplate} {...alertOptions}>
+            <ProgressAction />
+            <Alert />
+            <Routing />
+          </AlertProvider>
+        </Suspense>
+      </Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 

@@ -46,10 +46,19 @@
 }
 
 /* list */
+.item-menu {
+  justify-content: initial !important;
+}
+
 .item-list {
   display: flex;
   padding: 0.5rem;
   border-bottom: 1px solid gray;
+  justify-content: space-between;
+}
+
+.item-list > .options:hover {
+  cursor: pointer;
 }
 
 .item-list > i {
