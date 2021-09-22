@@ -10,3 +10,8 @@ export const getKnowledgeAreas = () => {
 export const getSubKnowledgeAreas = (id) => {
   return axios.get('api/knowledgearea/' + id + '/knowledgearea', tokenConfig(store.getState));
 };
+
+// CERTIFICATES
+export const getKnowledgeAreaCertificate = (id) => {
+  return axios.get('api/knowledgearea/' + id + '/certificate/', tokenConfig(store.getState));
+};

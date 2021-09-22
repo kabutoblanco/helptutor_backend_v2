@@ -5,7 +5,7 @@ from utils.models import BaseModel
 
 class Advertisement(BaseModel):
     title = models.CharField(max_length=255, verbose_name='Titulo')
-    description = models.CharField(max_length=255, verbose_name='Descripción')
+    description = models.CharField(max_length=255, blank=True, verbose_name='Descripción')
 
     student = models.ForeignKey(
         'users.Student', 

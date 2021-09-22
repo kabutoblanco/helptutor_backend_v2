@@ -5,7 +5,8 @@ from utils.models import BaseModel
 
 class Answer(BaseModel):
     likes = models.IntegerField(default=0, verbose_name='Me gusta')
-    description = models.CharField(max_length=255, verbose_name='Descripción')
+    spam_count = models.IntegerField(default=0, verbose_name='Contador de spam')
+    description = models.CharField(max_length=255, blank=True, verbose_name='Descripción')
 
     advertisement = models.ForeignKey(
         'advertisements.Advertisement', 

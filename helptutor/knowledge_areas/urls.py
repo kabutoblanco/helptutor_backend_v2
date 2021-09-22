@@ -12,6 +12,7 @@ router.register('knowledgearea_student', KnowledgeArea_StudentViewSet, basename=
 router.register('certificate', CertificateViewSet, basename='certificate')
 
 urlpatterns = [
+    path('api/knowledgearea/<int:pk>/certificate/', KnowledgeAreaCertificateAPI.as_view(), name='knowledgearea-certificates'),
     path('api/knowledgearea/<int:pk>/knowledgearea/', KnowledgeAreaCategoryAPIView.as_view(), name='specialities'),
     path('api/tutor/<int:pk_user>/knowledgearea/', TutorSpecialityAPIList.as_view(), name='tutor-specialities'),
     path('api/student/<int:pk_user>/knowledgearea/', StudentInterestAPIList.as_view(), name='student-insterests'),

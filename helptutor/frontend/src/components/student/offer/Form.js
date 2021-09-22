@@ -104,6 +104,7 @@ export default function Form(props) {
     <form onSubmit={formik.handleSubmit}>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Interes</label>
           <Autocomplete
             options={knowledgeAreasStudent}
             value={formik.values.knowledge_area_student}
@@ -131,6 +132,7 @@ export default function Form(props) {
       </div>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Titulo</label>
           <input
             className='w-100'
             type='text'
@@ -146,9 +148,10 @@ export default function Form(props) {
       </div>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Descripción</label>
           <textarea
             className='w-100'
-            name='description'
+            name='dNombresescription'
             value={formik.values.description}
             onChange={formik.handleChange}
             placeholder='Descripción'

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Redirect } from 'react-router-dom';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
+import { Redirect, Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../../redux/actions/auth';
@@ -8,23 +11,26 @@ import { login } from '../../redux/actions/auth';
 import AuthGoogle from './AuthGoogle';
 
 export default function index() {
+  const scheme = yup.object().shape({
+    email: yup.string().required('Requerido'),
+    password: yup.string().required('Requerido'),
+  });
+
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
-  const [auth, setAuth] = useState({
+  const auth = {
     email: '',
     password: '',
+  };
+
+  const formik = useFormik({
+    initialValues: auth,
+    validationSchema: scheme,
+    onSubmit: (values, { setSubmitting }) => {
+      dispatch(login(values));
+    },
   });
-
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setAuth({ ...auth, [name]: value });
-  };
-
-  const onLogin = (e) => {
-    e.preventDefault();
-    dispatch(login(auth));
-  };
 
   return isAuthenticated ? (
     <Redirect to='/rol' />
@@ -32,7 +38,7 @@ export default function index() {
     <div className='container d-flex justify-content-center'>
       <div className='box-form'>
         <span className='title-component'>INICIAR SESION</span>
-        <form action=''>
+        <form onSubmit={formik.handleSubmit}>
           <div className='row mb-2'>
             <div className='col-12'>
               <div className='input-form'>
@@ -40,10 +46,13 @@ export default function index() {
                 <input
                   type='email'
                   name='email'
-                  value={auth.email}
-                  onChange={onChange}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
                   placeholder='Correo electronico'
                 />
+                {formik.touched.email && formik.errors.email ? (
+                  <span className='error'>{formik.errors.email}</span>
+                ) : null}
               </div>
             </div>
           </div>
@@ -56,15 +65,18 @@ export default function index() {
                 <input
                   type='password'
                   name='password'
-                  value={auth.password}
-                  onChange={onChange}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
                   placeholder='Contraseña'
                 />
+                {formik.touched.password && formik.errors.password ? (
+                  <span className='error'>{formik.errors.password}</span>
+                ) : null}
               </div>
             </div>
           </div>
           <div className='d-flex justify-content-center'>
-            <button className='btn btn-primary mr-2' onClick={onLogin}>
+            <button type='submit' className='btn btn-primary mr-2'>
               INGRESAR
             </button>
             <div className=''>
@@ -72,7 +84,7 @@ export default function index() {
             </div>
           </div>
           <span className='span-description'>
-            ¿No tienes cuenta?, <a href=''>haz click para registrarte</a>
+            ¿No tienes cuenta?, <Link to='/registro'>haz click para registrarte</Link>
           </span>
         </form>
       </div>

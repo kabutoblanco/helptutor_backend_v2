@@ -106,6 +106,7 @@ export default function Form(props) {
     <form onSubmit={formik.handleSubmit}>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Especialidad</label>
           <Autocomplete
             options={knowledgeAreasTutor}
             value={formik.values.knowledge_area_tutor}
@@ -133,6 +134,7 @@ export default function Form(props) {
       </div>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Titulo</label>
           <input
             className='w-100'
             type='text'
@@ -148,6 +150,7 @@ export default function Form(props) {
       </div>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Precio</label>
           <input
             className='w-100'
             type='number'

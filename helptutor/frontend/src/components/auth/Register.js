@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
@@ -9,27 +12,43 @@ import { returnErrors } from '../../redux/actions/messages';
 import AuthGoogle from './AuthGoogle';
 
 export default function index() {
+  const scheme = yup.object().shape({
+    first_name: yup.string().required('Requerido'),
+    last_name: yup.string().required('Requerido'),
+    email: yup.string().required('Requerido'),
+    password: yup.string().required('Requerido'),
+    re_password: yup
+      .mixed()
+      .test('equals', 'Revise la contraseña', function () {
+        return this.parent.password == this.parent.re_password;
+      })
+      .required('Requerido'),
+  });
+
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const [role, setRole] = useState(undefined);
-  const [user, setUser] = useState({
+
+  const auth = {
     first_name: '',
     last_name: '',
     email: '',
     password: '',
-  });
-  const [re_password, setRe_password] = useState('');
-
-  const onChange = (e) => {
-    const { name, value } = e.target;
-    setUser({ ...user, [name]: value });
+    re_password: '',
   };
 
-  const onAdd = (e) => {
-    e.preventDefault();
+  const formik = useFormik({
+    initialValues: auth,
+    validationSchema: scheme,
+    onSubmit: (values, { setSubmitting }) => {
+      dispatch(onAdd(values));
+    },
+  });
+
+  const onAdd = (values) => {
     const data = {
-      user: user,
+      user: values,
     };
     if (role != undefined) {
       if (role == 'tutor') dispatch(addTutor(data));
@@ -45,7 +64,7 @@ export default function index() {
     <div className='container d-flex justify-content-center'>
       <div className='box-form'>
         <span className='title-component'>FORMULARIO DE REGISTRO</span>
-        <form action=''>
+        <form onSubmit={formik.handleSubmit}>
           <div className='d-flex justify-content-center'>
             <div className='pr-1'>
               <input
@@ -75,10 +94,13 @@ export default function index() {
                 <input
                   type='text'
                   name='first_name'
-                  value={user.first_name}
-                  onChange={onChange}
+                  value={formik.values.first_name}
+                  onChange={formik.handleChange}
                   placeholder='Nombres'
                 />
+                {formik.touched.first_name && formik.errors.first_name ? (
+                  <span className='error'>{formik.errors.first_name}</span>
+                ) : null}
               </div>
             </div>
             <div className='col-6'>
@@ -87,10 +109,13 @@ export default function index() {
                 <input
                   type='text'
                   name='last_name'
-                  value={user.last_name}
-                  onChange={onChange}
+                  value={formik.values.last_name}
+                  onChange={formik.handleChange}
                   placeholder='Apellidos'
                 />
+                {formik.touched.last_name && formik.errors.last_name ? (
+                  <span className='error'>{formik.errors.last_name}</span>
+                ) : null}
               </div>
             </div>
           </div>
@@ -101,10 +126,13 @@ export default function index() {
                 <input
                   type='email'
                   name='email'
-                  value={user.email}
-                  onChange={onChange}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
                   placeholder='Correo electronico'
                 />
+                {formik.touched.email && formik.errors.email ? (
+                  <span className='error'>{formik.errors.email}</span>
+                ) : null}
               </div>
             </div>
           </div>
@@ -117,10 +145,13 @@ export default function index() {
                 <input
                   type='password'
                   name='password'
-                  value={user.password}
-                  onChange={onChange}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
                   placeholder='Contraseña'
                 />
+                {formik.touched.password && formik.errors.password ? (
+                  <span className='error'>{formik.errors.password}</span>
+                ) : null}
               </div>
             </div>
             <div className='col-6'>
@@ -131,24 +162,24 @@ export default function index() {
                 <input
                   type='password'
                   name='re_password'
-                  value={re_password}
-                  onChange={(e) => setRe_password(e.target.value)}
+                  value={formik.values.re_password}
+                  onChange={formik.handleChange}
                   placeholder='Confirmar contraseña'
                 />
+                {formik.touched.re_password && formik.errors.re_password ? (
+                  <span className='error'>{formik.errors.re_password}</span>
+                ) : null}
               </div>
             </div>
           </div>
           <div className='d-flex justify-content-center'>
-            <button className='btn btn-primary mr-2' onClick={onAdd}>
+            <button type='submit' className='btn btn-primary mr-2'>
               REGISTRARME
             </button>
             <div className=''>
               <AuthGoogle isLogin={false} role={role} />
             </div>
           </div>
-          <span className='span-description'>
-            ¿No tienes cuenta?, <a href=''>haz click para registrarte</a>
-          </span>
         </form>
       </div>
     </div>

@@ -1,4 +1,5 @@
 # rest_framework
+from helptutor.services.serializers.service import ServiceViewSerializer
 from rest_framework import (generics, status, viewsets)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -16,6 +17,12 @@ class ServiceAPIView(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     queryset = Service.objects.filter(is_active=True)
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        """Return serializer based on action."""
+        if self.action in ['create', 'partial_update']:
+            return ServiceSerializer
+        return ServiceViewSerializer
 
     def create(self, request, *args, **kwargs):
         request.data['tutor'] = Tutor.objects.get(user=request.user.id).pk

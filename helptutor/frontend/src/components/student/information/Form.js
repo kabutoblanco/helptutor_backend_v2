@@ -64,6 +64,7 @@ export default function Form() {
     <form onSubmit={formik.handleSubmit}>
       <div className='row'>
         <div className='col-md-6 mb-2'>
+          <label htmlFor=''>Nombres</label>
           <input
             className='w-100'
             type='text'
@@ -77,6 +78,7 @@ export default function Form() {
           ) : null}
         </div>
         <div className='col-md-6 mb-2'>
+          <label htmlFor=''>Apellidos</label>
           <input
             className='w-100'
             type='text'
@@ -92,6 +94,7 @@ export default function Form() {
       </div>
       <div className='row'>
         <div className='col-md-6 mb-2'>
+          <label htmlFor=''>Correo electronico</label>
           <input
             className='w-100'
             type='email'
@@ -103,6 +106,7 @@ export default function Form() {
           />
         </div>
         <div className='col-md-6 mb-2'>
+          <label htmlFor=''>Telefono</label>
           <input
             className='w-100'
             type='text'
@@ -115,6 +119,7 @@ export default function Form() {
       </div>
       <div className='row mb-2'>
         <div className='col-md-6'>
+          <label htmlFor=''>Fecha de nacimiento</label>
           <input
             className='w-100'
             type='date'
@@ -127,6 +132,7 @@ export default function Form() {
       </div>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Intereses</label>
           <textarea
             className='w-100'
             name='user.interest'

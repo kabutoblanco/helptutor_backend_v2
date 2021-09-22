@@ -1,6 +1,6 @@
 # rest_framework
 from helptutor.knowledge_areas.models.knowledge_area_tutor import KnowledgeArea_Tutor
-from rest_framework import (status, viewsets)
+from rest_framework import (generics, status, viewsets)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -28,3 +28,11 @@ class CertificateViewSet(viewsets.ModelViewSet):
         Service.objects.filter(knowledge_area_tutor=id_speciality).update(is_active=False)
         Aggrement.objects.filter(service__knowledge_area_tutor=id_speciality).update(is_active=False)        
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class KnowledgeAreaCertificateAPI(generics.ListAPIView):
+    
+    serializer_class = CertificateSerializer
+
+    def get_queryset(self):
+        return Certificate.objects.filter(knowledge_area_tutor=self.kwargs['pk'], is_active=True)

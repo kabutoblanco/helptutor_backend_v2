@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useFormik, getIn } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 // REDUX
@@ -15,6 +15,8 @@ import { useKnowledgeAreas } from '../../../query/useKnowledgeArea';
 
 import { getKnowledgeAreas, getSubKnowledgeAreas } from '../../../services/KnowledgeArea';
 import { postTutorKnowledgeArea, patchTutorKnowledgeArea } from '../../../services/Tutor';
+
+import Certificate from '../certificate';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
@@ -167,6 +169,7 @@ export default function Form(props) {
       </div>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Etiquetas</label>
           <input
             className='w-100'
             type='text'
@@ -179,6 +182,7 @@ export default function Form(props) {
       </div>
       <div className='row mb-2'>
         <div className='col-12'>
+          <label htmlFor=''>Descripción</label>
           <textarea
             className='w-100'
             name='description'
@@ -187,6 +191,11 @@ export default function Form(props) {
             cols='30'
             rows='10'
             placeholder='Descripción'></textarea>
+        </div>
+      </div>
+      <div className='row mb-2'>
+        <div className='col-12'>
+          <Certificate id={data != null ? data.id : undefined} />
         </div>
       </div>
       <div className='d-flex justify-content-center'>
