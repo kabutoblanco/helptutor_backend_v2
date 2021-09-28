@@ -22,4 +22,4 @@ class TutorReviewAPI(generics.ListAPIView):
     serializer_class = ReviewSerializer
 
     def get_queryset(self):
-        return Review.objects.filter(tutor__user=self.request.user.id, is_active=True)
+        return Review.objects.filter(tutor__user=self.kwargs['pk_user'], is_active=True)

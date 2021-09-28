@@ -21,7 +21,7 @@ urlpatterns = [
     path('api/auth/user', UserAPI.as_view()),
     path('api/tutor/google', TutorGoogleAPI.as_view()),
     path('api/student/google', StudentGoogleAPI.as_view()),
-    path('api/tutor/review', TutorReviewAPI.as_view()),
+    path('api/tutor/<int:pk_user>/review', TutorReviewAPI.as_view()),
     path('api/auth/login/google', LoginGoogleAPI.as_view()),
     path('api/auth/login', LoginAPI.as_view()),
     path('api/auth/logout', knox_views.LogoutView.as_view(), name='knox_logout'),
