@@ -8,7 +8,7 @@ class Offer(BaseModel):
     description = models.CharField(max_length=255, blank=True, verbose_name='Descripción')
 
     student = models.ForeignKey('users.Student', on_delete=models.CASCADE, verbose_name='Estudiante')
-    knowledge_area_student = models.ForeignKey('knowledge_areas.KnowledgeArea_Student', on_delete=models.CASCADE, verbose_name='Area de conocimiento')
+    knowledge_area = models.ForeignKey('knowledge_areas.KnowledgeArea', on_delete=models.CASCADE, verbose_name='Area de conocimiento')
 
     class Meta:
         verbose_name = 'Oferta'
