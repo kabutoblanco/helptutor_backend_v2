@@ -58,7 +58,7 @@ class TutorOfferAPI(generics.ListAPIView):
         resQuery = []
         i = 0
         for ei in res:
-            j = 0
+            j = i
             flag = False
             for ej in res:
                 if ei[10] == ej[10] and ej[12] == 1:
