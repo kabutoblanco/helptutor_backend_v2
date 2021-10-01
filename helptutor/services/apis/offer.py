@@ -56,6 +56,7 @@ class TutorOfferAPI(generics.ListAPIView):
         cursor.execute(query)
         res = cursor.fetchall()
         resQuery = []
+        i = 0
         for ei in res:
             j = 0
             flag = False
@@ -63,10 +64,12 @@ class TutorOfferAPI(generics.ListAPIView):
                 if ei[10] == ej[10] and ej[12] == 1:
                     flag = True
                     resQuery.append(res.pop(j))
+                    i -= 1
                     break
                 j += 1
             if flag == False:
                 resQuery.append(ei)
+            i += 1
         
         print(len(resQuery))
             
