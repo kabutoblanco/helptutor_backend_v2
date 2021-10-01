@@ -2,6 +2,7 @@
 from rest_framework import (generics, status, viewsets)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.db import connection
 
 # models
 from helptutor.services.models import (Aggrement, Offer)
@@ -45,11 +46,14 @@ class StudentOfferAPI(generics.ListAPIView):
 class TutorOfferAPI(generics.ListAPIView):
     """View ListAPIView with serializer include student"""
 
-    serializer_class = OfferViewSerializer
+    serializer_class = OfferViewCustomSerializer
     permission_classes = [IsAuthenticated]
 
-    def get_queryset(self):
-        return Offer.objects.filter(is_active=True)
+    def list(self, request, *args, **kwargs):
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM  'services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id")
+        serializer = self.get_serializer(cursor.fetchall(), many=True)
+        return Response(data=serializer.data)
 
 
 class OfferNominationAPI(generics.ListAPIView):
