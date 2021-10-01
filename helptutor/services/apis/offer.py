@@ -51,12 +51,26 @@ class TutorOfferAPI(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         user = str(Tutor.objects.get(user=request.user.id).id)
-        print(user)
-        query = "SELECT * FROM  ('services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id) LEFT JOIN 'services_contract' as sc ON sc.id = sn.contract_ptr_id WHERE so.is_active = 1 and (sn.tutor_id = " + user + " or sn.tutor_id is NULL)"
-        print(query)
+        query = "SELECT *  FROM  ('services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id) LEFT JOIN 'services_contract' as sc ON sc.id = sn.contract_ptr_id WHERE so.is_active = 1 and (sn.tutor_id = " + user + " or sn.tutor_id is NULL) GROUP BY so.id, sn.tutor_id, sc.is_active"
         cursor = connection.cursor()
         cursor.execute(query)
-        serializer = self.get_serializer(cursor.fetchall(), many=True)
+        res = cursor.fetchall()
+        resQuery = []
+        for ei in res:
+            j = 0
+            flag = False
+            for ej in res:
+                if ei[10] == ej[10] and ej[12] == 1:
+                    flag = True
+                    resQuery.append(res.pop(j))
+                    break
+                j += 1
+            if flag == False:
+                resQuery.append(ei)
+        
+        print(len(resQuery))
+            
+        serializer = self.get_serializer(resQuery, many=True)
         return Response(data=serializer.data)
 
 
