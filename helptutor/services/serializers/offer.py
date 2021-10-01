@@ -32,6 +32,10 @@ class OfferViewCustomSerializer(serializers.Serializer):
     date_record = serializers.SerializerMethodField()
     date_update = serializers.SerializerMethodField()
 
+    def validate(self, attrs):
+        print('validando')
+        return super().validate(attrs)
+
     def get_id(self, obj):
         return obj[0]
 

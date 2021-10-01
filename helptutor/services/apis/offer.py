@@ -6,7 +6,7 @@ from django.db import connection
 
 # models
 from helptutor.services.models import (Aggrement, Offer)
-from helptutor.users.models import User, Student
+from helptutor.users.models import Student
 
 # serializers
 from helptutor.services.serializers import *
@@ -57,24 +57,30 @@ class TutorOfferAPI(generics.ListAPIView):
         res = cursor.fetchall()
         resQuery = []
         i = 0
-        for ei in res:
+        for ei in range(len(res)):
             j = i
             flag = False
-            for ej in res:
-                if ei[10] == ej[10] and ej[12] == 1:
-                    flag = True
-                    resQuery.append(res.pop(j))
-                    i -= 1
-                    break
+            for ej in range(len(res)):
+                if j > i:
+                    if res[i][0] == res[j][0] and res[i][12] == 1 and res[j][12] != 1:
+                        res.pop(j)
+                        j -= 1
+                        flag = True
+                    elif res[i][0] == res[j][0] and res[i][12] == 0 and res[j][12] == 1:
+                        res.pop(i)
+                        resQuery.append(res.pop(j - 1))
+                        i -= 1
+                        flag = True
+                        break
                 j += 1
-            if flag == False:
+            if not(flag):
                 resQuery.append(res.pop(i))
+                i -= 1
             i += 1
-        
-        print(len(resQuery))
+            if len(res) == 0: break
             
         serializer = self.get_serializer(resQuery, many=True)
-        return Response(data=serializer.data)
+        return Response(serializer.data)
 
 
 class OfferNominationAPI(generics.ListAPIView):
