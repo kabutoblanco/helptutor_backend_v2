@@ -68,7 +68,7 @@ class TutorOfferAPI(generics.ListAPIView):
                     break
                 j += 1
             if flag == False:
-                resQuery.append(ei)
+                resQuery.append(res.pop(i))
             i += 1
         
         print(len(resQuery))
