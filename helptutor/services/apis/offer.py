@@ -50,7 +50,7 @@ class TutorOfferAPI(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
-        user = str(User.objects.get(pk=request.user.id).id)
+        user = str(Tutor.objects.get(user=request.user.id).id)
         print(user)
         query = "SELECT * FROM  ('services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id) LEFT JOIN 'services_contract' as sc ON sc.id = sn.contract_ptr_id WHERE so.is_active = 1 and (sc.is_active = 1 or sc.is_active is NULL) and (sn.tutor_id = " + user + " or sn.tutor_id is NULL)"
         print(query)
