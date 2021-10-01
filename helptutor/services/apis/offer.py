@@ -51,7 +51,7 @@ class TutorOfferAPI(generics.ListAPIView):
 
     def list(self, request, *args, **kwargs):
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM  'services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id")
+        cursor.execute("SELECT * FROM  ('services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id) LEFT JOIN 'services_contract' as sc ON sc.id = sn.contract_ptr_id WHERE so.is_active = 1 and (sc.is_active = 1 or sc.is_active is NULL)")
         serializer = self.get_serializer(cursor.fetchall(), many=True)
         return Response(data=serializer.data)
 
