@@ -3,7 +3,7 @@ from rest_framework import serializers
 from helptutor.services.models import Offer
 from helptutor.services.models.nomination import Nomination
 from helptutor.services.serializers.nomination import NominationSerializer
-from helptutor.users.models import User, Student
+from helptutor.users.models import Tutor, Student
 
 from helptutor.users.serializers import StudentViewSerializer
 
@@ -55,8 +55,8 @@ class OfferViewCustomSerializer(serializers.Serializer):
 
     def get_tutor_id(self, obj):
         try:
-            return User.objects.get(pk=obj[9]).id
-        except User.DoesNotExist:
+            return Tutor.objects.get(pk=obj[9]).user_id
+        except Tutor.DoesNotExist:
             return None
 
     def get_date_record(self, obj):
