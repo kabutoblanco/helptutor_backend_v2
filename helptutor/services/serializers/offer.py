@@ -55,7 +55,7 @@ class OfferViewCustomSerializer(serializers.Serializer):
 
     def get_tutor_id(self, obj):
         try:
-            return Tutor.objects.get(pk=obj[9]).user_id
+            return Tutor.objects.get(pk=obj[10]).user_id
         except Tutor.DoesNotExist:
             return None
 
