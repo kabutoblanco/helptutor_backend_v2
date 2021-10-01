@@ -1,7 +1,9 @@
 from rest_framework import serializers
 
 from helptutor.services.models import Offer
-from helptutor.users.models.student import Student
+from helptutor.services.models.nomination import Nomination
+from helptutor.services.serializers.nomination import NominationSerializer
+from helptutor.users.models import User, Student
 
 from helptutor.users.serializers import StudentViewSerializer
 
@@ -25,6 +27,7 @@ class OfferViewCustomSerializer(serializers.Serializer):
     price = serializers.SerializerMethodField()
     description = serializers.SerializerMethodField()
     student = serializers.SerializerMethodField()
+    nomination = serializers.SerializerMethodField()
     tutor_id = serializers.SerializerMethodField()
     date_record = serializers.SerializerMethodField()
     date_update = serializers.SerializerMethodField()
@@ -42,11 +45,19 @@ class OfferViewCustomSerializer(serializers.Serializer):
         return obj[5]
 
     def get_student(self, obj):
-        print(obj[6])
         return StudentViewSerializer(Student.objects.get(pk=obj[6])).data
 
+    def get_nomination(self, obj):
+        try:
+            return NominationSerializer(Nomination.objects.get(pk=obj[11])).data
+        except Nomination.DoesNotExist:
+            return None
+
     def get_tutor_id(self, obj):
-        return obj[9]
+        try:
+            return User.objects.get(pk=obj[9]).id
+        except User.DoesNotExist:
+            return None
 
     def get_date_record(self, obj):
         return obj[2]
