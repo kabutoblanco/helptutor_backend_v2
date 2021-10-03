@@ -97,7 +97,7 @@ class LoginGoogleSerializer(serializers.Serializer):
         except ValueError:
             raise serializers.ValidationError('Error auth GoogleAPI')
         except User.DoesNotExist:
-            raise serializers.ValidationError('Credenciales incorrectas')
+            raise serializers.ValidationError('Usuario no registrado')
         return data
     
     def create(self, validated_data):

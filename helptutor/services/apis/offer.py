@@ -50,36 +50,44 @@ class TutorOfferAPI(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def list(self, request, *args, **kwargs):
-        user = str(Tutor.objects.get(user=request.user.id).id)
-        query = "SELECT *  FROM  ('services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id) LEFT JOIN 'services_contract' as sc ON sc.id = sn.contract_ptr_id WHERE so.is_active = 1 and (sn.tutor_id = " + user + " or sn.tutor_id is NULL) GROUP BY so.id, sn.tutor_id, sc.is_active"
+        tutor = str(Tutor.objects.get(user=request.user.id).id)
+        query = "SELECT *  FROM  ('services_offer' as so left JOIN 'services_nomination' AS sn ON so.id = sn.offer_id) LEFT JOIN 'services_contract' as sc ON sc.id = sn.contract_ptr_id WHERE so.is_active = 1"
         cursor = connection.cursor()
         cursor.execute(query)
         res = cursor.fetchall()
         resQuery = []
         i = 0
-        for ei in range(len(res)):
+        print('tutor {} - query...'.format(tutor))
+        while i < len(res):
             j = i
-            flag = False
-            for ej in range(len(res)):
+            while j < len(res):
                 if j > i:
-                    if res[i][0] == res[j][0] and res[i][12] == 1 and res[j][12] != 1:
-                        res.pop(j)
-                        j -= 1
-                        flag = True
-                    elif res[i][0] == res[j][0] and res[i][12] == 0 and res[j][12] == 1:
-                        res.pop(i)
-                        resQuery.append(res.pop(j - 1))
-                        i -= 1
-                        flag = True
-                        break
+                    print("i {} j {} - offer i {} j {} - status i {} j {}".format(i, j, res[i][0], res[j][0], res[i][12], res[j][12]))
+                    if res[i][10] == tutor and res[i][12] == 1 and res[i][0] == res[j][0]:
+                        if res[j][10] != tutor:
+                            print('remove tutor j {}'.format(j))
+                            res.pop(j)
+                            j -= 1
+                        elif res[j][10] == tutor and res[i][12] == 1:
+                            print('remove tutor 1 i {} current user'.format(i))
+                            res.pop(i)
+                            i -= 1
+                            break
+                    elif res[i][10] != tutor and res[i][0] == res[j][0]:
+                        if res[j][10]:
+                            print('remove other i {}'.format(i))
+                            res.pop(i)
+                            i -= 1
+                            break
+                        elif res[i][0] == res[j][0]:
+                            print('remove other j {}'.format(j))
+                            res.pop(j)
+                            j -= 1
                 j += 1
-            if not(flag):
-                resQuery.append(res.pop(i))
-                i -= 1
             i += 1
             if len(res) == 0: break
             
-        serializer = self.get_serializer(resQuery, many=True)
+        serializer = self.get_serializer(res, many=True)
         return Response(serializer.data)
 
 

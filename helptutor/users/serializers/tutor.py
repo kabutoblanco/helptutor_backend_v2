@@ -8,6 +8,7 @@ from google.auth.transport import requests
 # models
 from knox.models import AuthToken
 from helptutor.users.models import User, Tutor, Student, Moderator
+from helptutor.users.models.review import Review
 
 # serializers
 from .user import (UserViewSerializer, UserCreateSerializer)
@@ -19,6 +20,21 @@ from utils.google import get_information_google
 
 class TutorViewSerializer(serializers.ModelSerializer):
     user = UserViewSerializer(read_only=True)
+    score_count = serializers.SerializerMethodField()
+    score_average = serializers.SerializerMethodField()
+
+    def get_score_count(self, obj):
+        reviews = Review.objects.filter(tutor=obj.id, is_active=True)
+        score_count = reviews.count()
+        return score_count
+
+    def get_score_average(self, obj):
+        reviews = Review.objects.filter(tutor=obj.id, is_active=True)
+        score_count = reviews.count()
+        score_average = 0
+        for i in reviews:
+            score_average += i.score / score_count
+        return score_average
 
     class Meta:
         model = Tutor
@@ -39,7 +55,7 @@ class TutorCreateSerializer(serializers.ModelSerializer):
         self.context['user'] = user
 
     def validate(self, attrs):
-        verify_tutor_exist(self.context['user'].email)        
+        verify_tutor_exist(self.context['user'].email)
         return super().validate(attrs)
 
     def create(self, validated_data):
@@ -88,16 +104,17 @@ class TutorGoogleCreateSerializer(serializers.Serializer):
         token = data
         CLIENT_ID = "581408483289-vlrheiceitim0evek4mrjnakqm5v07m7.apps.googleusercontent.com"
         try:
-            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+            idinfo = id_token.verify_oauth2_token(
+                token, requests.Request(), CLIENT_ID)
             user = get_information_google(dict(), idinfo)
             # Crea un nuevo usuario o lo recupera si ya existe
             user, created = User.objects.get_or_create(
                 email=user['username'], defaults={**user}
-            )        
+            )
             if created:
                 user.set_password(user.password)
                 user.save()
-            self.context['user'] = user            
+            self.context['user'] = user
             verify_tutor_exist(user.email)
             return data
         except ValueError:
@@ -114,7 +131,7 @@ class TutorGoogleCreateSerializer(serializers.Serializer):
 
         user = self.context['user']
         user.send_registration_email('tutor')
-        
+
         return get_response_user(user)
 
     def to_representation(self, value):
