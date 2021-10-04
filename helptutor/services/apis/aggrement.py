@@ -13,8 +13,8 @@ from helptutor.services.serializers import *
 
 class AggrementAPIView(viewsets.ModelViewSet):
 
-    serializer_class = NominationSerializer
-    queryset = Nomination.objects.filter(is_active=True)
+    serializer_class = AggrementSerializer
+    queryset = Aggrement.objects.filter(is_active=True)
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
@@ -35,4 +35,13 @@ class StudentAggrementAPI(generics.ListAPIView):
 
     def get_queryset(self):
         return Aggrement.objects.filter(student__user=self.kwargs['pk_user'], is_active=True)
+
+
+class TutorAggrementAPI(generics.ListAPIView):
+
+    serializer_class = AggrementViewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Aggrement.objects.filter(service__tutor__user=self.kwargs['pk_user'], is_active=True)
         

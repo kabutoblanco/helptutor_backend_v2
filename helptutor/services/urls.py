@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/tutor/offer/', TutorOfferAPI.as_view(), name='tutor-offers'),
     path('api/student/<int:pk_user>/offer/', StudentOfferAPI.as_view(), name='student-offers'),
     path('api/student/<int:pk_user>/aggrement/', StudentAggrementAPI.as_view(), name='student-aggrements'),
+    path('api/tutor/<int:pk_user>/aggrement/', TutorAggrementAPI.as_view(), name='tutor-aggrements'),
     path('api/nomination/<int:pk_offer>/tutor/', NominationTutorAPI.as_view(), name='nomination-offers'),
     path('api/offer/<int:pk_offer>/nomination/', NominationTutorAPI.as_view(), name='offer-nominations'),
     path('api/', include(router.urls)),    
