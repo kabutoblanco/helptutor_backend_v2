@@ -17,6 +17,12 @@ class AggrementAPIView(viewsets.ModelViewSet):
     queryset = Aggrement.objects.filter(is_active=True)
     permission_classes = [IsAuthenticated]
 
+    def get_serializer_class(self):
+        if self.action in ['create', 'update', 'partial_update']:
+            return AggrementSerializer
+        else:
+            return AggrementViewSerializer
+
     def create(self, request, *args, **kwargs):
         request.data['student'] = Student.objects.get(user=request.user.id).pk
         return super().create(request, *args, **kwargs)
@@ -30,7 +36,7 @@ class AggrementAPIView(viewsets.ModelViewSet):
 
 class StudentAggrementAPI(generics.ListAPIView):
 
-    serializer_class = AggrementSerializer
+    serializer_class = AggrementViewSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -44,4 +50,3 @@ class TutorAggrementAPI(generics.ListAPIView):
 
     def get_queryset(self):
         return Aggrement.objects.filter(service__tutor__user=self.kwargs['pk_user'], is_active=True)
-        
