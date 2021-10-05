@@ -9,6 +9,7 @@ from helptutor.users.models import Student
 
 # serializers
 from helptutor.services.serializers import *
+from helptutor.payments.serializers import PaymentSerializer
 
 
 class AggrementAPIView(viewsets.ModelViewSet):

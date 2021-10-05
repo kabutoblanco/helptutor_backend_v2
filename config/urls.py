@@ -8,11 +8,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('helptutor.advertisements.urls')),
     path('', include('helptutor.knowledge_areas.urls')),
-    # path('', include('helptutor.payments.urls')),
+    path('', include('helptutor.payments.urls')),
     path('', include('helptutor.places.urls')),
     path('', include('helptutor.schedules.urls')),
     path('', include('helptutor.services.urls')),
-    # path('', include('helptutor.sesions.urls')),
+    path('', include('helptutor.sesions.urls')),
     path('', include('helptutor.users.urls')),
     path('', include('helptutor.frontend.urls')),
 ]

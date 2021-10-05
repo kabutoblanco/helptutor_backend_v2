@@ -1,6 +1,8 @@
 # rest_framework
 from rest_framework import (generics, viewsets)
+from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 # models
 from helptutor.schedules.models import TimeSlot
@@ -17,8 +19,14 @@ class TimeSlotViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
-        request.data['tutor'] = Tutor.objects.get(user=request.user.id).pk
-        return super().create(request, *args, **kwargs)
+        tutor = Tutor.objects.get(user=request.user.id).pk
+        time_slots = request.data['time_slots']
+        for time_slot in time_slots:
+            time_slot['tutor'] = tutor
+            serializer = self.get_serializer(data=time_slot)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class TutorTimeSlotAPI(generics.ListAPIView):

@@ -57,11 +57,11 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'helptutor.advertisements',
     'helptutor.knowledge_areas',
-    # 'helptutor.payments',
+    'helptutor.payments',
     'helptutor.places',
     'helptutor.schedules',
     'helptutor.services',
-    # 'helptutor.sesions',
+    'helptutor.sesions',
     'helptutor.users',
     'helptutor.frontend'
 ]

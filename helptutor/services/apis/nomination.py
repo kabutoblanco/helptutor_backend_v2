@@ -40,7 +40,7 @@ class TutorNominationAPI(generics.ListAPIView):
 class NominationTutorAPI(generics.ListAPIView):
 
     serializer_class = NominationTutorViewSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         return Nomination.objects.filter(offer=self.kwargs['pk_offer'], is_active=True).order_by('-date_update')

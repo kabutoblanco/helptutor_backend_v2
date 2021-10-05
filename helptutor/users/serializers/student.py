@@ -65,9 +65,15 @@ class StudentUpdateSerializer(serializers.ModelSerializer):
     user = UserViewSerializer(read_only=True)
 
     def update(self, instance, validated_data):
+        pk_user = self.context['view'].kwargs['pk']
         # user = self.context['request'].user
-        # instance = Student.objects.get(user=user)
+        instance = Tutor.objects.get(user=pk_user)
         return super().update(instance, validated_data)
+
+    def to_representation(self, instance):
+        pk_user = self.context['view'].kwargs['pk']
+        instance = StudentViewSerializer(Student.objects.get(user=pk_user)).data
+        return instance
 
     class Meta:
         model = Student
