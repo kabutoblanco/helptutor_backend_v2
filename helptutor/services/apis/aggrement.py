@@ -1,3 +1,5 @@
+from django.db import transaction
+
 # rest_framework
 from rest_framework import (generics, status, viewsets)
 from rest_framework.permissions import IsAuthenticated
@@ -10,6 +12,7 @@ from helptutor.users.models import Student
 # serializers
 from helptutor.services.serializers import *
 from helptutor.payments.serializers import PaymentSerializer
+from helptutor.sesions.serializers import SesionSerializer
 
 
 class AggrementAPIView(viewsets.ModelViewSet):
@@ -24,9 +27,29 @@ class AggrementAPIView(viewsets.ModelViewSet):
         else:
             return AggrementViewSerializer
 
+    @transaction.atomic
     def create(self, request, *args, **kwargs):
-        request.data['student'] = Student.objects.get(user=request.user.id).pk
-        return super().create(request, *args, **kwargs)
+        student = Student.objects.get(user=request.user.id)
+        time_slot = request.data.pop("time_slot")
+        payment = request.data.pop("payment")
+        request.data.update(request.data.pop("aggrement"))
+        request.data["student"] = student.id
+        response =  super().create(request, *args, **kwargs)
+        contract = response.data
+        sesion = {"contract": contract["id"], "time_slot": time_slot, "duration": 1}
+        # Save payment
+        payment["num_invoice"] = "asd"
+        payment["contract"] = contract["id"]
+        payment["payment"] = contract["price"]
+        payment["user"] = request.user.id
+        serializer_payment = PaymentSerializer(data=payment)
+        serializer_payment.is_valid(raise_exception=True)
+        serializer_payment.save()
+        # Save sesion
+        serializer_sesion = SesionSerializer(data=sesion)
+        serializer_sesion.is_valid(raise_exception=True)
+        serializer_sesion.save()        
+        return response
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
