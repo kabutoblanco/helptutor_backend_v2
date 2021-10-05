@@ -54,6 +54,7 @@ class AggrementAPIView(viewsets.ModelViewSet):
         serializer_sesion = SesionSerializer(data=sesion)
         serializer_sesion.is_valid(raise_exception=True)
         serializer_sesion.save()        
+        Aggrement.objects.get(pk=contract["id"]).send_agreement_email()
         return response
 
     def destroy(self, request, *args, **kwargs):

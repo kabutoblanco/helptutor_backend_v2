@@ -14,7 +14,7 @@ from helptutor.services.serializers import *
 
 class OfferAPIView(viewsets.ModelViewSet):
 
-    queryset = Offer.objects.filter(is_active=True)
+    queryset = Offer.objects.filter(is_active=True).order_by('-date_record', '-date_update')
     serializer_class = OfferSerializer
     permission_classes = [IsAuthenticated]
 
@@ -40,7 +40,7 @@ class StudentOfferAPI(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Offer.objects.filter(student__user=self.kwargs['pk_user'], is_active=True)
+        return Offer.objects.filter(student__user=self.kwargs['pk_user'], is_active=True).order_by('-date_record', '-date_update')
 
 
 class TutorOfferAPI(generics.ListAPIView):
@@ -97,4 +97,4 @@ class OfferNominationAPI(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Nomination.objects.filter(offer=self.kwargs['pk_offer'], is_active=True)
+        return Nomination.objects.filter(offer=self.kwargs['pk_offer'], is_active=True).order_by('-date_record', '-date_update')

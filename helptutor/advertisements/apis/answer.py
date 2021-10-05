@@ -13,7 +13,7 @@ from helptutor.advertisements.serializers import AnswerSerializer, AnswerViewSer
 class AnswerViewSet(viewsets.ModelViewSet):
     """Answer view set."""
 
-    queryset = Answer.objects.filter(is_active=True)
+    queryset = Answer.objects.filter(is_active=True).order_by('-date_record', '-date_update')
     permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
