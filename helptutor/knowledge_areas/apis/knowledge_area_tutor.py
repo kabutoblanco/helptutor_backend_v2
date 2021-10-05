@@ -29,12 +29,14 @@ class KnowledgeArea_TutorViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         request.data['tutor'] = Tutor.objects.get(user=request.user.id).pk
+        request.data["is_active"] = True
         response = super().create(request, *args, **kwargs)
         response.data = KnowledgeArea_TutorViewSerializer(KnowledgeArea_Tutor.objects.get(pk=response.data['id'])).data
         return response
 
     def partial_update(self, request, *args, **kwargs):
         request.data['tutor'] = Tutor.objects.get(user=request.user.id).pk
+        request.data["is_active"] = True
         response = super().partial_update(request, *args, **kwargs)
         response.data = KnowledgeArea_TutorViewSerializer(KnowledgeArea_Tutor.objects.get(pk=response.data['id'])).data
         return response

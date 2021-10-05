@@ -8,6 +8,7 @@ from rest_framework.response import Response
 # models
 from helptutor.services.models import Nomination
 from helptutor.users.models import Student
+from helptutor.schedules.models import TimeSlot
 
 # serializers
 from helptutor.services.serializers import *
@@ -37,6 +38,10 @@ class AggrementAPIView(viewsets.ModelViewSet):
         response =  super().create(request, *args, **kwargs)
         contract = response.data
         sesion = {"contract": contract["id"], "time_slot": time_slot, "duration": 1}
+        # Update time slot
+        time_slot_instance = TimeSlot.objects.get(pk=time_slot)
+        time_slot_instance.is_busy = True
+        time_slot_instance.save()
         # Save payment
         payment["num_invoice"] = "asd"
         payment["contract"] = contract["id"]

@@ -21,6 +21,7 @@ class KnowledgeArea_Tutor(BaseModel):
     class Meta:
         verbose_name = 'Especialidad'
         verbose_name_plural = 'Especialidades'
+        unique_together = ('tutor', 'knowledge_area', 'is_active')
 
     def __str__(self):
         return "[{}] {} {}".format(self.id, self.knowledge_area, self.tutor)

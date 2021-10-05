@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework.validators import UniqueTogetherValidator
 
 from utils.models import BaseModel
 

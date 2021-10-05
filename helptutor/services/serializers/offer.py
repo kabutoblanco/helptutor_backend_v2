@@ -7,6 +7,7 @@ from helptutor.users.models import Tutor, Student
 
 from helptutor.users.serializers import StudentViewSerializer
 
+
 class OfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
@@ -15,6 +16,22 @@ class OfferSerializer(serializers.ModelSerializer):
 
 class OfferViewSerializer(serializers.ModelSerializer):
     student = StudentViewSerializer(read_only=True)
+
+    class Meta:
+        model = Offer
+        fields = '__all__'
+
+
+class OfferStudentViewSerializer(serializers.ModelSerializer):
+    student = StudentViewSerializer(read_only=True)
+    count_nominations = serializers.SerializerMethodField()
+
+    def get_count_nominations(self, obj):
+        user = self.context['view'].kwargs['pk_user']
+        nominations = Nomination.objects.filter(
+            offer=obj.pk, offer__student__user=user, is_active=True)
+        count = nominations.count()
+        return count
 
     class Meta:
         model = Offer

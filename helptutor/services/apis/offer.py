@@ -36,7 +36,7 @@ class OfferAPIView(viewsets.ModelViewSet):
 
 class StudentOfferAPI(generics.ListAPIView):
 
-    serializer_class = OfferSerializer
+    serializer_class = OfferStudentViewSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
@@ -55,7 +55,6 @@ class TutorOfferAPI(generics.ListAPIView):
         cursor = connection.cursor()
         cursor.execute(query)
         res = cursor.fetchall()
-        resQuery = []
         i = 0
         print('tutor {} - query...'.format(tutor))
         while i < len(res):
